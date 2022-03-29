@@ -1,0 +1,45 @@
+﻿@model PictureStore.Models.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="bg-white shadow ">
+    <h4 class="pt-2 pl-5">Bạn chắc chắn muốn xóa danh mục này?</h4>
+    <hr />
+    <dl class="dl-horizontal pt-2 pl-5">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descript)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descript)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.parentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.parentId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color p-5 d-flex flex-row">
+            <input type="submit" value="Xóa" class="btn btn-danger mr-2" />
+            <div>@Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-dark" })</div>
+        </div>
+    }
+</div>

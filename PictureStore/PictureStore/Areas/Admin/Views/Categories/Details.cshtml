@@ -1,0 +1,41 @@
+﻿@model PictureStore.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="bg-white shadow ">
+    <h4 class="pt-2 pl-5">Chi tiết danh mục</h4>
+    <hr />
+    <dl class="dl-horizontal pt-2 pl-5">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descript)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descript)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.parentId)
+        </dt>
+
+    </dl>
+
+    
+    <div class="no-color p-5 d-flex flex-row">
+        <div>@Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.id }, new { @class = "btn btn-warning mr-2" })</div>
+        <div>@Html.ActionLink("Trở về", "Index", null, new { @class = "btn btn-primary" })</div>
+    </div>
+</div>
+<p>
+    
+</p>

@@ -1,0 +1,129 @@
+﻿@model PagedList.IPagedList<PictureStore.Models.Category>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Quản lý danh mục tranh";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý danh mục tranh</h6>
+    </div>
+    <div class="card-body">
+        <div class="mb-2">
+            @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-success" })
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length d-flex flex-row" id="dataTable_length">
+                    <label>Hiển thị </label>
+                    <select id="selectPageSize" name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm" style="width:50px; margin-left:10px; margin-right:10px">
+                        @if (ViewBag.size == 5)
+                        {
+                            <option value="5" selected>5</option>
+                        }
+                        else
+                        {
+                            <option value="5">5</option>
+                        }
+
+                        @if (ViewBag.size == 10)
+                        {
+                            <option value="10" selected>10</option>
+                        }
+                        else
+                        {
+                            <option value="10">10</option>
+                        }
+
+                        @if (ViewBag.size == 20)
+                        {
+                            <option value="20" selected>20</option>
+                        }
+                        else
+                        {
+                            <option value="20">20</option>
+                        }
+
+                        @if (ViewBag.size == 50)
+                        {
+                            <option value="50" selected>50</option>
+                        }
+                        else
+                        {
+                            <option value="50">50</option>
+                        }
+                    </select>
+                    <label> bản ghi trên 1 trang</label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="dataTable_filter d-flex flex-row-reverse" id="dataTables_filter">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.TextBox("search", ViewBag.search as string)
+                        <button class="btn" type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
+                    }
+                    <label class="pr-2">Tìm kiếm </label>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã danh mục</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Mã danh mục cha</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.descript)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.parentId)
+                            </td>
+                            <td>
+                                @*@Html.ActionLink("Chi tiết", "Details", new { id = item.id }, new { @class = "btn btn-info" })*@
+                                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 d-flex justify-content-end">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, size = ViewBag.size, search = ViewBag.search }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("selectPageSize").onchange = function () {
+        const pageSize = document.getElementById("selectPageSize").value;
+        window.location.href = "/Admin/Categories?search=@ViewBag.search&size=" + pageSize;
+    }
+</script>
