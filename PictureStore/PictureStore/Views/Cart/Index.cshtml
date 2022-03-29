@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product w-25">Sản phẩm</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in ViewBag.cart)
+                            {
+                                <tr id="cartItem_@c.Key.id">
+                                    <td class="shoping__cart__item w-25">
+                                        <img src="@c.Key.imageUrl" alt="" class="w-50">
+                                    <td>
+                                        <h5>@c.Key.name</h5>
+                                        <input type="hidden" value="@c.Key.id" class="pictureId"/>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        @c.Key.price
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="@c.Value" name="countPicture" class="pictureCount"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        @Html.Raw(c.Key.price * c.Value)
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="javascript:void(0);" onclick="deleteItemInCart(@c.Key.id)"><span class="icon_close"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="@Url.Action("Index", "Home")" class="primary-btn cart-btn">Tiếp tục mua hàng</a>
+                    <a href="javascript:void(0)" class="primary-btn cart-btn cart-btn-right" onclick="updateCart()">
+                        <span class="icon_loading"></span>
+                        Cập nhật giỏ hàng
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @*<div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Discount Codes</h5>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Giỏ hàng</h5>
+                    <ul>
+                        <li>Tổng tiền <span>@ViewBag.total (VNĐ)</span></li>
+                    </ul>
+                    <a href="@Url.Action("AddBill", "Bill")" class="primary-btn">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+<script>
+    function deleteItemInCart(id) {
+        const formData = new FormData();
+        formData.append("idPicture", id);
+        fetch("@Url.Action("DeleteItemInCart", "Cart")", {
+            method: 'POST',
+            body: formData
+        }).then(() => {
+            alert("Đã xóa sản phẩm khỏi đơn hàng");
+            document.getElementById("cartItem_" + id).remove();
+        });
+    }
+</script>
+
+<script>
+    function updateCart() {
+        var cart = {};
+        var ids = document.getElementsByClassName("pictureId");
+        var counts = document.getElementsByClassName("pictureCount");
+
+        for (var i = 0; i < ids.length; i++) {
+            cart[ids[i].value] = counts[i].value
+        }
+        console.log(JSON.stringify(cart));
+        var formData = new FormData();
+        formData.append("jsonCart", JSON.stringify(cart));
+        fetch("@Url.Action("UpdateCart", "Cart")", {
+            method: 'POST',
+            body: formData
+        }).then(() => {
+            window.location.replace("@Url.Action("Index", "Cart")");
+        });
+    }
+</script>

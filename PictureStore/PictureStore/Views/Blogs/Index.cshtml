@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<PictureStore.Models.Blog>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Blogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Blog Section Begin -->
+<section class="blog mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="blog__item">
+                               
+                                <div class="blog__item__text">
+                                    <ul>
+                                        <li><i class="fa fa-calendar-o"></i> @item.dateCreate</li>
+                                    </ul>
+                                    <h5><a href="@Url.Action("Details", "Blogs", new { id = item.id })">@item.name</a></h5>
+                                    <div class="textBlog">
+                                        @Html.Raw(item.content)
+                                    </div>
+                                    <a href="@Url.Action("Details", "Blogs", new { id = item.id })" class="blog__btn">XEM THÊM <span class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                    <div class="col-lg-12">
+                        <div class="product__pagination blog__pagination">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, size = ViewBag.size}), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->
+<style>
+    .textBlog {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+    }
+</style>

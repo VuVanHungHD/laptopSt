@@ -1,0 +1,74 @@
+﻿@model PictureStore.Models.User
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="container d-flex justify-content-center">
+        <div class="card o-hidden border-0 shadow-lg my-5 col-6">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+
+
+                <div class="">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Thông tin người dùng</h1>
+                        </div>
+                        @using (Html.BeginForm("Edit", "Users", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <form class="user">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.id)
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên người dùng" } })
+                                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.phonenumber, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.phonenumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Số điện thoại", @type = "tel" } })
+                                    @Html.ValidationMessageFor(model => model.phonenumber, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Địa chỉ" } })
+                                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="control-label">Mật khẩu cũ (Không thay đổi thì để trống)</div>
+                                    <input class="form-control" type="hidden" name="password" value="khumbiet" />
+                                    <input class="form-control" type="password" name="oldPassword" />
+                                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="control-label">Mật khẩu mới (Không thay đổi thì để trống)</div>
+                                    <input class="form-control" type="password" name="newPassword" />
+                                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="control-label">Nhập lại mật khẩu mới (Không thay đổi thì để trống)</div>
+                                    <input class="form-control" type="password" name="repeatNewPassword" />
+                                    @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                                </div>
+                                <input type="hidden" name="userType" value="USER" />
+                                <input type="submit" value="Lưu" class="btn btn-warning btn-user btn-block" />
+                            </form>
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

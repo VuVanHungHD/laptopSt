@@ -1,0 +1,40 @@
+﻿@model PictureStore.Models.Blog
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="container m-2">
+                <div class="blog__details__text">
+                    <h3 style="text-align:center">
+                        Blog: @Model.name
+                    </h3>
+                    <div style="text-indent: 50px;">
+                        @Html.Raw(Model.content)
+                    </div>
+                </div>
+                <div class="blog__details__content">
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="blog__details__author">
+                                <div class="blog__details__author__text">
+                                    <span>@Model.dateCreate</span>
+                                    <h6>@Model.author</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Details Section End -->

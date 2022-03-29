@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Banner Begin -->
+
+<div class="banner">
+    <div class="container">
+        <div class="row mb-2">
+            @foreach (var c in ViewBag.categories)
+            {
+
+                <div class="col-lg-3 p-5 shadow">
+                    <h5><a href="@Url.Action("Details", "Category", new { id = c.id})">@c.name</a></h5>
+                </div>
+
+            }
+        </div>
+        </div>
+</div>
+
+
+
